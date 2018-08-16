@@ -46,6 +46,7 @@ app.get("/scrapings", (req, res) => {
             }); //end article grab
         }); //end axios get
     }; //end for loop
+    res.end();
 });
 
 app.get("/articles", (req, res) => {
