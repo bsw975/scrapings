@@ -16,7 +16,9 @@ const app = express();
 app.use(logger("dev"));
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
-mongoose.connect("mongodb://localhost/hw9Scraper");
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/hw9Scraper";
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
 
 app.get("/scrapings", (req, res) => {
     for (let i = 2; i < 4; i++) {
