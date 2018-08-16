@@ -66,6 +66,31 @@ app.get("/articles/:id", (req,res) => {
     .catch(err => res.json(err));
 });
 
+app.get("/delete/:id", (req, res) => {
+    db.Article.findOne({"_id": req.params.id})
+    .then(articleEntry => {
+
+        l(req.params.id);
+        l(articleEntry.title + "= articleEntry")
+        l(articleEntry.note._id + "=noteID")
+        db.Note.remove({_id: articleEntry.note._id},        
+  function(error, removed) {
+    // Log any errors from mongojs
+    if (error) {
+      console.log(error);
+      res.send(error);
+    }
+    else {
+      // Otherwise, send the mongojs response to the browser
+      // This will fire off the success function of the ajax request
+      console.log(removed);
+      res.send(removed);
+    }
+  } // end function
+        )// end db.Note.remove
+})
+}); //end app.get
+
 app.post("/articles/:id", (req,res) => {
     db.Note.create(req.body)
     .then(dbNote => {
